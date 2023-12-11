@@ -2,6 +2,13 @@ $SteamExeFilePath = "C:\Program Files (x86)\Steam\steam.exe"
 $DefaultStartTime = "01:00"
 $DefaultShutDownTime = "08:00"
 
+$TestPathResult = Test-Path $SteamExeFilePath
+if ($TestPathResult -eq $false){
+    echo "Steam exe file could not be found."
+    Read-Host -Prompt "Press any key to exit"
+    Exit
+}
+
 $_startTimePrompt = "Start download at: (default: " + $DefaultStartTime + ")"
 $StartTime = Read-Host -Prompt $_startTimePrompt
 if ($StartTime.Length -eq 0) {
@@ -25,15 +32,16 @@ $SteamStarted = $false
 do {
     $time_now = Get-Date -Format "HH:mm"
     # Check time for start
-    if ($time_now -eq $StartTime){
+    if (($time_now -eq $StartTime) -and ($SteamStarted -eq $false)){
         Start-Process -FilePath  $SteamExeFilePath
         $SteamStarted = $true
     }
 
     # Check time for shut down
     if ($Shutdown -eq "y") {
-        if ($time_now -eq $StartTime){
-            
+        if ($time_now -eq $ShutDownTime){
+            shutdown.exe /s
+            Exit
         }
     } else {
         if ($SteamStarted){
@@ -42,6 +50,3 @@ do {
     }
     Start-Sleep -Seconds 5
 } while ($CheckTime)
-
-
-
