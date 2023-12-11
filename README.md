@@ -1,2 +1,2 @@
 # SteamStarter
-Start Steam after a given time to download games that you previously added to download queue.
+SteamStarter is a shell script that starts Steam at the given time to download games you previously added to the download queue.
