@@ -4,8 +4,9 @@ $DefaultShutDownTime = "08:00"
 
 $TestPathResult = Test-Path $SteamExeFilePath
 if ($TestPathResult -eq $false){
-    echo "Steam exe file could not be found."
-    Read-Host -Prompt "Press any key to exit"
+    echo "Steam.exe file could not be found."
+    Write-Host -NoNewLine 'Press any key to exit...';
+    $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
     Exit
 }
 
